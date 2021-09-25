@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
 
 type Props ={
     token: string,
@@ -8,23 +7,25 @@ type Props ={
 };
 
 type State = {
-    user: {
+    
+    token: string,
     username: string,
     password: string,
-    role: boolean
-    }
+    //role: boolean
+    
 };
 
     class SignIn extends Component<Props, State> {
         constructor(props: Props){
             super(props)
             this.state ={
-            user: {
+            
+                token: props.token,
                 username: '',
                 password: '',
-                role: true
+                //role: true
                 
-            }
+            
         }
     }
 
@@ -36,7 +37,7 @@ type State = {
                     user: {
                         username:'',
                         password:'',
-                        role: ''
+                        //role: ''
                     }
                 }),
                 headers: new Headers({
@@ -51,27 +52,23 @@ type State = {
                 console.log(err)
             })
         }
-
+        
 
 render() {
-    // if (this.state.user.role === true)  {
-    //     return <Redirect to= '/home/admin'/>}
-    //     else if (this.state.user.role) {
-    //         <Redirect to ='/home/user'/>
-    //     }
+    // 
   return (
     <div>
         <Form onSubmit={this.handleSubmit}>
-            <h3>Sign In</h3>
+           
                 <Form.Group className="mb-3" controlId="formBasicUsername">
                     <Form.Label></Form.Label>
-                    <Form.Control type="username" placeholder="Enter Username" />
+                    <Form.Control type="username" placeholder="Enter Username" value={this.state.username} onChange={(e) => this.setState({username:e.target.value})} />
                     <Form.Text className="text-muted">
                     </Form.Text>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label></Form.Label>
-                    <Form.Control type="password" placeholder="Password" />
+                    <Form.Control type="password" placeholder="Password" value={this.state.password} onChange={(e) => this.setState({password:e.target.value})} />
                 </Form.Group>
                 <Button variant="primary" type="submit">               
                     Submit

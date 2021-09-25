@@ -1,29 +1,16 @@
 import React, { Component } from 'react';
 import {Navbar, Container, Nav } from 'react-bootstrap';
-// import house from '../../assets/house.jpg';
-import { BrowserRouter as Router, Route,} from 'react-router-dom';
+import house from '../../assets/house.jpg';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import Home from './admin'
 // import './bootstrap.min.css';
 
-type HeaderProps = {
-    token: string,
-    // clearToken: () => void
-}
-
-type HeaderState = {
-
-}
 
 
 
+class UserHeader extends Component {
 
-class AdminHeader extends Component<HeaderProps, HeaderState> {
 
-    constructor(props: HeaderProps) {
-        super(props)
-        this.state ={
-
-        }
-    }
 
 
     render() {
@@ -42,11 +29,7 @@ class AdminHeader extends Component<HeaderProps, HeaderState> {
                 </Navbar.Brand>  */}
                 <Navbar bg="dark" expand="lg">
                     <Nav className="me-auto">
-                        <Router>
-                        <Nav.Link href="/admin/home">Home</Nav.Link>
-                        <Nav.Link href="/upload">Upload</Nav.Link>
-                        {/* <Nav.Link href="../landing" onClick={() => this.props.clearToken()}>Logout</Nav.Link> */}
-                        </Router>
+  
                     </Nav>
                 </Navbar>
                 </Container>
@@ -55,4 +38,4 @@ class AdminHeader extends Component<HeaderProps, HeaderState> {
     }
 }
 
-export default AdminHeader;
+export default UserHeader;

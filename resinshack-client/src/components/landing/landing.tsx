@@ -1,76 +1,117 @@
 
-import { Container, Col, Card } from 'react-bootstrap';
+import { Container, Card, Row, Col } from 'react-bootstrap';
 import React, { Component } from 'react';
 import SignIn from './signin';
 import SignUp from './signup';
-//import pic1 from '../../assets/pic1.jpg';
+import Admin from '../home/admin';
+import User from '../home/user';
+import Home from '../home/homepage';
+import logo from '../../assets/logo.jpg';
+import {Redirect, Route, Switch} from 'react-router-dom';
+import {Navbar, Nav } from 'react-bootstrap';
+import Products from './products';
+
 
 
 
 type Props = {
     token: string,
     updateToken(newToken: string): void,
+    // updateRole(newRole:boolean):void
 }
 
 type State = {
+    user:{
         username: string,
-        password: string
-        sessionToken: string
+        password: string,
+        sessionToken: string,
+        // role: boolean
+    }
 }
 
 class Landing extends Component<Props, State> {
     constructor(props: Props) {
         super(props)
         this.state = {
+            user: {
                 username: '',
                 password: '',
-                sessionToken:''
+                sessionToken:'',
+                // role: true
                 }
+            }
 
         }
     
 
-    updateToken = (newToken: string) => {
-        localStorage.setItem('token', newToken)
-        this.setState({
-            sessionToken: newToken
-        })
-        console.log(this.state.sessionToken)
-    }
+    // updateToken = (newToken: string) => {
+    //     localStorage.setItem('token', newToken)
+    //     this.setState({
+    //         sessionToken: newToken
+    //     })
+    //     console.log(this.state.sessionToken)
+    // }
 
+    // protectectViews = () => {
+    //     return (localStorage.getItem('role')? <Admin updateToken={this.state.sessionToken}/> : <User/>)
+    //   }
 
     render() {
         // if (this.state.user.role === true)  {
-        //         return <Redirect to= '/home/admin'/>}
+        //         return <Redirect to= '/admin'/>}
         //         else if (this.state.user.role) {
-        //             <Redirect to ='/home/user'/>
+        //             <Redirect to ='/user'/>
         //         }
 
         return (
+            
             <div className='landing'>
+                <Navbar bg="dark" variant="dark">
+                <Container>
+                <Navbar.Brand>
+                Julee's Resin Shop
+                </Navbar.Brand> 
+                <Navbar bg="dark" expand="lg">
+                    <Nav className="me-auto">
+                    {/* <Route> */}
+                        {/* <Nav.Link href="/products">Products</Nav.Link> */}
+                    {/* </Route> */}
+                    </Nav>
+                    <Nav className="me-auto">
+                     <Switch> 
+                         <Route exact path='/products'><Products token={this.props.token} updateToken={this.props.updateToken}/></Route> 
+                     </Switch> 
+                    </Nav>
+                </Navbar>
+                </Container>
+                </Navbar>
                 <Container className='landing-pg'>
                     <br/>
                     <br/>
-                    <h1>Welcome to Julee's Resin Shack! </h1>
+                    <h1>
+                    <img alt= 'shop logo' src= {logo}></img>
+                    </h1>
                     <br />
                     <br />
-                <Col className='homeWrapper' md={{ span: 6, offset: 3 }}>
-                    <Card style={{ width: '30rem'}}>
-                    <SignUp token={this.props.token} updateToken={this.props.updateToken} />
-                    </Card>
-                    <br/>
-                    <br/>
-                    <Card style={{ width: '30rem'}}>
+                <Row className='homeWrapper'>
+                    <Col md={4}>
+                    <Card.Body>
+                    <Card.Title as="h5">Sign Up</Card.Title>
+                    <SignUp token={this.props.token}updateToken={this.props.updateToken} />
+                    </Card.Body>
+                    </Col>                   
+                    <Col md={{span: 4, offset:4}}>
+                    <Card.Body>
+                    <Card.Title as="h5">Sign In</Card.Title>
                     <SignIn token={this.props.token}updateToken={this.props.updateToken}/>
-                    </Card>
-                    
-                </Col>
+                    </Card.Body>
+                    </Col>               
+                </Row>
                 </Container>
-            </div>
+                </div>
         )
     }
 }
   
   export default Landing;
 
-  //'style={{ backgroundImage: `url(${pic1})`, backgroundSize: 'cover', height: '100%', width: '100%'}}
