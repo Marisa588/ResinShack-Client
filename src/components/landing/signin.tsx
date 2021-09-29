@@ -1,31 +1,32 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
+import { isThisTypeNode } from 'typescript';
+
 
 type Props ={
     token: string,
     updateToken(newToken: string) : void,
+    updateRole(newRole: boolean) : void
 };
 
-type State = {
-    
-    token: string,
+type SignInState = {
+    // token: string,
     username: string,
     password: string,
-    //role: boolean
-    
+    redirectToHomepage: boolean
+    role: boolean
 };
 
-    class SignIn extends Component<Props, State> {
+    class SignIn extends Component<Props, SignInState> {
         constructor(props: Props){
             super(props)
-            this.state ={
-            
-                token: props.token,
+            this.state ={            
+                // token: props.token,
                 username: '',
                 password: '',
-                //role: true
-                
-            
+                redirectToHomepage: false,
+                role: false
         }
     }
 
@@ -35,9 +36,8 @@ type State = {
                 method:'POST',
                 body: JSON.stringify({
                     user: {
-                        username:'',
-                        password:'',
-                        //role: ''
+                        username: this.state.username,
+                        password: this.state.password,
                     }
                 }),
                 headers: new Headers({
@@ -47,26 +47,34 @@ type State = {
                 (response) => response.json()
             ).then((data) => {
                 this.props.updateToken(data.sessionToken)
+                this.setState({redirectToHomepage: true, role: data.user.role})
             })
             .catch(err => {
                 console.log(err)
             })
         }
         
+        
 
 render() {
-    // 
-  return (
+    let redirectHome = this.state.redirectToHomepage
+    if (redirectHome) {
+        if (this.state.role)
+            return (<Redirect to="/home/admin" />)
+        else
+            return (<Redirect to="/home/user" />)
+    }
+    return (
     <div>
         <Form onSubmit={this.handleSubmit}>
            
-                <Form.Group className="mb-3" controlId="formBasicUsername">
+                <Form.Group className="mb-3" controlId="Username">
                     <Form.Label></Form.Label>
                     <Form.Control type="username" placeholder="Enter Username" value={this.state.username} onChange={(e) => this.setState({username:e.target.value})} />
                     <Form.Text className="text-muted">
                     </Form.Text>
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Group className="mb-3" controlId="Password">
                     <Form.Label></Form.Label>
                     <Form.Control type="password" placeholder="Password" value={this.state.password} onChange={(e) => this.setState({password:e.target.value})} />
                 </Form.Group>

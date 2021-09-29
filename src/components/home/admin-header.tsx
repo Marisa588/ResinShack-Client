@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import {Navbar, Container, Nav } from 'react-bootstrap';
-// import house from '../../assets/house.jpg';
-import { BrowserRouter as Router} from 'react-router-dom';
-// import './bootstrap.min.css';
+import { Component } from 'react';
+import {Navbar, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
+// import AdminUpload from './admin-upload';
+
 
 type HeaderProps = {
-    token: string,
-    // clearToken: () => void
+        token: string,
 }
 
 type HeaderState = {
@@ -28,29 +28,23 @@ class AdminHeader extends Component<HeaderProps, HeaderState> {
 
     render() {
         return (
+        <div className='admin header'>
             <Navbar bg="dark" variant="dark">
                 <Container>
-                {/* <Navbar.Brand href="#home">
-                    <img
-                    alt=""
-                    src= {house}
-                    width="30"
-                    height="30"
-                    className="d-inline-block align-top"
-                    />{' '}
+                <Navbar.Brand>
                 Julee's Resin Shop
-                </Navbar.Brand>  */}
-                <Navbar bg="dark" expand="lg">
-                    <Nav className="me-auto">
-                        <Router>
-                        <Nav.Link href="/admin/home">Home</Nav.Link>
-                        <Nav.Link href="/upload">Upload</Nav.Link>
-                        {/* <Nav.Link href="../landing" onClick={() => this.props.clearToken()}>Logout</Nav.Link> */}
-                        </Router>
-                    </Nav>
-                </Navbar>
+                </Navbar.Brand> 
+                    <div className="list">
+                    <ul>
+                        <Link to="/admin/products">Products</Link>
+                        <Link to="/admin/upload">Upload</Link>
+                    </ul>
+                    </div>
                 </Container>
+                <div className="route">
+                </div>
             </Navbar> 
+        </div>
         )
     }
 }

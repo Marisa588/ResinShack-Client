@@ -1,91 +1,93 @@
-import React, { Component } from 'react';
-import './App.css';
-import './bootstrap.min.css';
-import Landing from './components/landing/landing';
-import Home from './components/home/homepage';
-import Admin from './components/home/admin';
+import React, { Component, ReactElement } from "react";
+import "./App.css";
+// import 'bootswatch/dist/quartz/bootstrap.min.css';
+import Landing from "./components/landing/landing";
+import Home from "./components/home/homepage";
+import Admin from "./components/home/admin";
 import User from './components/home/user';
-import {Redirect, Route, Switch} from 'react-router-dom';
-
+import { Route, Switch, Redirect, Link } from "react-router-dom";
+import Products from "./components/landing/products";
 
 
 type State = {
-  role: boolean
-  sessionToken: string
-}
+  sessionRole: boolean;
+  sessionToken: string;
+};
 
-
-
-class App extends Component <{}, State> {
-  constructor(props: string) {
-    super(props)
-    this.state = {      
+class App extends Component<{} , State> {
+  constructor(props: {} ) {
+    super(props);
+    this.state = {
       sessionToken: "",
-      role: false
+      sessionRole: false ,
+    };
+  }
+
+  componentDidMount() {
+    if (localStorage.getItem("token")) {
+      this.setState({
+        sessionToken: localStorage.getItem("token")!,
+      });
+    }
+    if (localStorage.getItem("role")) {
+      this.setState({ 
+        sessionRole: Boolean(localStorage.getItem("role")) 
+      });
     }
   }
 
   updateToken = (newToken: string) => {
-    localStorage.setItem('token', newToken)
+    localStorage.setItem("token", newToken);
     this.setState({
-      sessionToken: newToken
+      sessionToken: newToken,
     });
-    console.log(this.state.sessionToken)
-  }
-    clearToken = () => {
-      localStorage.clear();
-      this.setState({ sessionToken: ""});
-      console.log("Token cleared and Logged out");
-    };
+    console.log(this.state.sessionToken);
+  };
+
+  clearToken = () => {
+    localStorage.clear();
+    this.setState({ sessionToken: "" });
+  };
+
   updateRole = (newRole: boolean) => {
-    // new Boolean(this.state.role).toString()
-    localStorage.setItem('role', newRole.toString());
-    console.log(newRole);
+    localStorage.setItem("role", String(newRole));
     this.setState({
-      role: newRole
-    })
-    console.log(newRole)
+      sessionRole: newRole,
+    });
   }
 
-  // protectectViews = () => {
-  //   return (localStorage.getItem('role')? <Admin token={this.state.sessionToken}/> : <User/>)
-  // }
-  protectedViews = () => {
-    return (this.state.sessionToken === localStorage.getItem('token')) ? (
-      <User/>
-    ) : (
-      <Landing token={this.state.sessionToken} updateToken={this.updateToken}/>
-    )
+  ifAuthenticated = (comp: ReactElement) => {
+    return this.state.sessionToken ? comp : <Redirect to="/" />
   }
-render(){
-  if (localStorage.getItem("role") === "true")  {
-            return <Redirect to= '/admin'/>}
-            else {
-                <Redirect to ='/user'/>
-            }
-  return (
-    <div className="App">
-      {/* <Landing token={this.state.sessionToken} updateToken={this.updateToken} updateRole={this.updateRole}/> */}
-      {/* <Switch>
-         <Route exact path="/" component={Landing}> 
-      <Landing token={this.state.sessionToken} updateToken={this.updateToken} />
-        </Route>
-      <Home token={this.state.sessionToken} updateToken={this.updateToken} />
-        <Route exact path="/home" component={Home}>
-        {this.state.sessionToken === localStorage.getItem('token') ?
-          <Admin 
-           token={this.state.sessionToken}
-           /> :  
-           <User    
-         />} 
-         </Route>
-      </Switch> */}
-      {this.protectedViews()}
+  ifAdmin = (comp: ReactElement) => {
+    return this.state.sessionRole === true ? comp : <Redirect to = "/" />
+  }
 
-
-    </div>
-  );
-}
+  render() {
+    return (
+      <div className="App">
+        {/* <Link to="/home">Home</Link>
+        <Link to="/home/admin">Admin</Link> */}
+        <Switch>
+          <Route exact path="/">
+            <Landing token={this.state.sessionToken} updateToken={this.updateToken} updateRole={this.updateRole}/>
+          </Route>
+          <Route path="/home">
+            {this.ifAuthenticated(<Home token={this.state.sessionToken} />)}
+          </Route>
+          <Route exact path="/home/admin">
+            {this.ifAdmin(this.ifAuthenticated(<Admin token={this.state.sessionToken} />))}
+          </Route>
+          <Route exact path="/home/user">
+          {this.ifAuthenticated(<User token={this.state.sessionToken} />)}
+          </Route>
+          <Route path="/products">
+            <Products/>
+          </Route>
+        </Switch>
+      </div>
+    );
+  }
 }
 
 export default App;

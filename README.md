@@ -1,3 +1,11 @@
+# Resin Shack-Client
+
+Resin Shack uses React Typescript and React-Bootstrap
+
+## Dependencies needed
+
+npm install react-bootstrap, typescript, bootswatch, bootstrap
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

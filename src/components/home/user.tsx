@@ -1,45 +1,41 @@
-import React, { Component} from 'react';
-import logo from '../../assets/logo.jpg';
+import { Component} from 'react';
+import UserProducts from './user-products';
+import UserHeader from './user-header';
+import 'bootswatch/dist/quartz/bootstrap.min.css';
 
-// import './bootstrap.min.css';
 
 
-// type Props ={
-//     token: string,
-//     // updateToken(newToken: string) : void,
-// };
+type Props ={
+    token: string
+};
 
-// type State = {
-//     user: {
-//         username: string,
-//         password: string,
-//         sessionToken: string,
-//         role: boolean
-//     }
-// };
+type State = {
+    // user: {
+        // username: string,
+        // password: string,
+        sessionToken: string,
+        role: boolean
+    // }
+};
 
-class User extends Component {
-//     constructor(props: Props) {
-//         super(props)
-//         this.state = {
-//             user: {
-//                 username: '',
-//                 password: '',
-//                 sessionToken:'',
-//                 role: false
-//                 }
-//             }
-
-//         }    
-
+class User extends Component<Props, State> {
+    constructor(props: any) {
+    super(props)
+    this.state = {      
+      sessionToken: "",
+      role: false
+    }
+  }
 
 
     render() {
         return (
             <div>
-                
-            <h3><img alt="logo" src={logo}></img></h3>
-            </div>
+                <UserHeader token={this.state.sessionToken} />
+        <div className="landing-cards">
+            <UserProducts token={this.state.sessionToken} />
+                </div>
+                </div>
         )
     }
 }

@@ -1,33 +1,31 @@
 import React, { Component} from 'react';
-// import './bootstrap.min.css';
-import Header from './admin-header';
-import logo from '../../assets/logo.jpg';
+import AdminHeader from './admin-header';
+import AdminProducts from './admin-products';
 
 
 
 type Props = {
     token: string,
-    // updateToken(newToken: string): void,
 }
 
 type State = {
-    user:{
-        username: string,
-        password: string,
+    // user:{
+        // username: string,
+        // password: string,
         sessionToken: string,
         role: boolean
-    }
+    // }
 }
 class Admin extends Component<Props, State> {
     constructor(props: Props) {
         super(props)
         this.state = {
-            user: {
-                username: '',
-                password: '',
+            // user: {
+                // username: '',
+                // password: '',
                 sessionToken:'',
                 role: true
-                }
+                // }
             }
 
         }    
@@ -35,10 +33,8 @@ class Admin extends Component<Props, State> {
     render() {
         return (
             <div>
-                <Header token={this.props.token} />
-                <br/>
-                <br/>
-            <h3><img alt="logo" src={logo}></img></h3>
+            <AdminHeader token={this.state.sessionToken} />
+            <AdminProducts token={this.state.sessionToken} />
             
             </div>
         )

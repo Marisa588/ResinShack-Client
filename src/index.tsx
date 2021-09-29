@@ -1,15 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import './bootstrap.min.css';
+// import 'bootswatch/dist/quartz/bootstrap.min.css';
 import App  from './App';
-import { BrowserRouter }from 'react-router-dom';
+import { BrowserRouter as Router}from 'react-router-dom';
+
 
 
 ReactDOM.render(
-  <BrowserRouter>
+  <Router>
     <App />
-  </BrowserRouter>,
+  </Router>,
   document.getElementById('root')
 );
 
