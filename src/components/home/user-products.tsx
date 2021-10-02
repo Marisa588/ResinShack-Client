@@ -1,5 +1,5 @@
 import  { Component } from 'react';
-import { Card, CardGroup} from 'react-bootstrap';
+import { Card, CardGroup, Button} from 'react-bootstrap';
 
 
 
@@ -13,7 +13,8 @@ type ProductsList ={
     description: string,
     price: string,
     imageLink: string,
-    imageUrl: string
+    imageUrl: string,
+    // owner_id: id
 }
 
 type State = {
@@ -48,6 +49,23 @@ class UserProducts extends Component <Props, State> {
         })
         .catch(err => console.log(err))
     }
+
+    // postFavorite = () => {
+    //     fetch('http://localhost:3001/favorite/', {
+    //         method: 'Post',
+    //         body: JSON.stringify({
+    //             product: {
+    //                 name: this.state.product.name, 
+    //                 description: this.state.product.description, 
+    //                 price: this.state.product.price, 
+    //                 imageLink: this.state.product.imageLink, 
+    //                 imageUrl: this.state.product.imageUrl,
+    //                 postId: this.state.product.postId 
+
+    //             }
+    //         })
+    //     })
+    // }
     
     render() {
         return(
@@ -78,8 +96,9 @@ class UserProducts extends Component <Props, State> {
                     {products.description}
                     </Card.Text>
                     </Card.Body>
-                    <Card.Footer>
                     <small className="text-muted">{products.price}</small>
+                    <Card.Footer>
+                    <Button>Like</Button>
                     </Card.Footer>
                 </Card>
                 </CardGroup>

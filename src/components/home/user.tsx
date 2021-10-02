@@ -6,7 +6,8 @@ import 'bootswatch/dist/quartz/bootstrap.min.css';
 
 
 type Props ={
-    token: string
+    token: string,
+   role: boolean
 };
 
 type State = {
@@ -14,7 +15,7 @@ type State = {
         // username: string,
         // password: string,
         sessionToken: string,
-        role: boolean
+        sessionRole: boolean
     // }
 };
 
@@ -23,7 +24,7 @@ class User extends Component<Props, State> {
     super(props)
     this.state = {      
       sessionToken: "",
-      role: false
+      sessionRole: false
     }
   }
 

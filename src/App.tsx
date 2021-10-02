@@ -5,7 +5,9 @@ import Landing from "./components/landing/landing";
 import Home from "./components/home/homepage";
 import Admin from "./components/home/admin";
 import User from './components/home/user';
-import { Route, Switch, Redirect, Link } from "react-router-dom";
+import Upload from './components/home/admin-upload';
+import UserFavorite from './components/home/user-favorite';
+import { Route, Switch, Redirect } from "react-router-dom";
 import Products from "./components/landing/products";
 
 
@@ -60,29 +62,37 @@ class App extends Component<{} , State> {
     return this.state.sessionToken ? comp : <Redirect to="/" />
   }
   ifAdmin = (comp: ReactElement) => {
-    return this.state.sessionRole === true ? comp : <Redirect to = "/" />
+    return this.state.sessionRole === true ? comp : <Redirect to = "/home/admin" />
   }
+
+  // ifUser = (comp: ReactElement) => {
+  //   return this.state.sessionRole === false ? comp : <Redirect to ="/home/user"/>
+  // }
 
   render() {
     return (
       <div className="App">
-        {/* <Link to="/home">Home</Link>
-        <Link to="/home/admin">Admin</Link> */}
         <Switch>
           <Route exact path="/">
             <Landing token={this.state.sessionToken} updateToken={this.updateToken} updateRole={this.updateRole}/>
           </Route>
           <Route path="/home">
-            {this.ifAuthenticated(<Home token={this.state.sessionToken} />)}
+            {this.ifAuthenticated(<Home token={this.state.sessionToken} role={this.state.sessionRole} updateToken={this.updateToken} />)}
           </Route>
           <Route exact path="/home/admin">
-            {this.ifAdmin(this.ifAuthenticated(<Admin token={this.state.sessionToken} />))}
+            {this.ifAdmin(<Admin token={this.state.sessionToken} role={this.state.sessionRole}/>)}
           </Route>
           <Route exact path="/home/user">
-          {this.ifAuthenticated(<User token={this.state.sessionToken} />)}
+          <User token={this.state.sessionToken} role={this.state.sessionRole} />
           </Route>
           <Route path="/products">
             <Products/>
+          </Route>
+          <Route path="/admin/upload">
+            <Upload token={this.state.sessionToken} updateToken={this.updateToken}/>
+          </Route>
+          <Route path = "/user/favorite">
+            <UserFavorite token={this.state.sessionToken} />
           </Route>
         </Switch>
       </div>

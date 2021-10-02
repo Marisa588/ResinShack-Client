@@ -1,30 +1,33 @@
-import React, { Component} from 'react';
+import { Component} from 'react';
 import AdminHeader from './admin-header';
 import AdminProducts from './admin-products';
 
 
 
-type Props = {
+
+type AdminProps = {
     token: string,
+    role: boolean
+    // updateToken(newToken: string): void,
 }
 
-type State = {
+type AdminState = {
     // user:{
         // username: string,
         // password: string,
         sessionToken: string,
-        role: boolean
+        sessionRole: boolean
     // }
 }
-class Admin extends Component<Props, State> {
-    constructor(props: Props) {
+class Admin extends Component<AdminProps, AdminState> {
+    constructor(props: AdminProps) {
         super(props)
         this.state = {
             // user: {
                 // username: '',
                 // password: '',
                 sessionToken:'',
-                role: true
+                sessionRole: true
                 // }
             }
 
@@ -33,6 +36,7 @@ class Admin extends Component<Props, State> {
     render() {
         return (
             <div>
+               
             <AdminHeader token={this.state.sessionToken} />
             <AdminProducts token={this.state.sessionToken} />
             

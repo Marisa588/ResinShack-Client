@@ -3,25 +3,27 @@ import { Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Redirect } from "react-router-dom";
 
-type Props = {
+type SignUpProps = {
   token: string;
   updateToken(newToken: string): void;
   updateRole(newRole: boolean): void;
 };
 
-type State = {
+type SignUpState = {
   username: string;
   password: string;
-  // role: boolean
+  redirectToHomepage: boolean;
+  role: boolean;
 };
 
-class SignUp extends Component<Props, State> {
-  constructor(props: Props) {
+class SignUp extends Component<SignUpProps, SignUpState> {
+  constructor(props: SignUpProps) {
     super(props);
     this.state = {
       username: "",
       password: "",
-      // role: true
+      role: false,
+      redirectToHomepage: false
     };
   }
 
@@ -33,7 +35,7 @@ class SignUp extends Component<Props, State> {
         user: {
           username: this.state.username,
           password: this.state.password,
-          // role: ''
+          role: ''
         },
       }),
       headers: new Headers({

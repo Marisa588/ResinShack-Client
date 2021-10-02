@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Card } from "react-bootstrap";
+import { Card, CardGroup, Container, Row, Col } from "react-bootstrap";
 import ProductsHeader from "./productsHeader";
 import "bootswatch/dist/quartz/bootstrap.min.css";
 
@@ -10,11 +10,11 @@ type ProductsList = {
   imageLink: string;
   imageUrl: string;
 };
-type State = {
+type ProductsState = {
   products: ProductsList[];
 };
 
-class Products extends Component<{}, State> {
+class Products extends Component<{}, ProductsState> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -49,35 +49,25 @@ class Products extends Component<{}, State> {
         {this.state.products.map((products) => {
           return (
             // <div className="productsPage">
-              /* <div className = 'searchbar'>
+            /* <div className = 'searchbar'>
                 <form class="d-flex">
                     <input class="form-control me-sm-2" type="text" placeholder="Search">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
             </div> */
-                /* <CardGroup> */
-                /* <Row xs={1} md={2} className="g-4"> */
-                  <Card style={{ maxWidth: "22rem" }}>
-                    <Card.Img variant="top" src="holder.js/100px160" />
-                    <Card.Body>
-                      <Card.Title>{products.name}</Card.Title>
-                      <Card.Text>{products.description}</Card.Text>
-                    </Card.Body>
-                    <Card.Footer>
-                      <small className="text-muted">{products.price}</small>
-                    </Card.Footer>
-                  </Card>
-                  /* <Card style={{ maxWidth: "22rem" }}>
-                    <Card.Img variant="top" src="holder.js/100px160" />
-                    <Card.Body>
-                      <Card.Title></Card.Title>
-                      <Card.Text></Card.Text>
-                    </Card.Body>
-                    <Card.Footer>
-                      <small className="text-muted"></small>
-                    </Card.Footer>
-                  </Card> */
-                /* </CardGroup> */
-            //   </div>
+            <Container className= "flexwrap: wrap">
+              <Row>
+                  <CardGroup style={{display: 'flex', flexDirection: 'row'}}>
+                      <Card.Img variant="top" src={products.imageUrl} />
+                      <Card.Body>
+                        <Card.Title>{products.name}</Card.Title>
+                        <Card.Text>{products.description}</Card.Text>
+                      </Card.Body>
+                      <Card.Footer>
+                        <small className="text-muted">{products.price}</small>
+                      </Card.Footer>
+                  </CardGroup>
+               </Row> 
+            </Container>
           );
         })}
       </div>

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-import { isThisTypeNode } from 'typescript';
 
 
-type Props ={
+type SignInProps ={
     token: string,
     updateToken(newToken: string) : void,
     updateRole(newRole: boolean) : void
@@ -18,8 +17,8 @@ type SignInState = {
     role: boolean
 };
 
-    class SignIn extends Component<Props, SignInState> {
-        constructor(props: Props){
+    class SignIn extends Component<SignInProps, SignInState> {
+        constructor(props: SignInProps){
             super(props)
             this.state ={            
                 // token: props.token,
@@ -38,6 +37,7 @@ type SignInState = {
                     user: {
                         username: this.state.username,
                         password: this.state.password,
+                        role: true
                     }
                 }),
                 headers: new Headers({
@@ -47,11 +47,14 @@ type SignInState = {
                 (response) => response.json()
             ).then((data) => {
                 this.props.updateToken(data.sessionToken)
+                this.props.updateRole(data.user.role)
+                console.log(data.user.role)
                 this.setState({redirectToHomepage: true, role: data.user.role})
             })
             .catch(err => {
                 console.log(err)
             })
+            // console.log(this.props.updateRole(role))
         }
         
         

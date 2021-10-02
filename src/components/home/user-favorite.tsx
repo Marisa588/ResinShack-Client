@@ -1,62 +1,93 @@
-import React, { Component } from 'react';
+import  { Component } from 'react';
 import { Card, CardGroup } from 'react-bootstrap';
 import {Navbar, Nav, Container} from 'react-bootstrap';
 
 
 
-type Props = {
+type FavoriteProps = {
     token: string,
 };
 
-type State = {
+type FavoriteState = {
    product: {
    name: string;
    description: string;
    price: string;
    imageUrl: string;
+   imageLink: string;
+   owner_id: string;
 
     };
+    postId: number 
 }
 
-class UserFavorites extends Component <Props, State> {
-    constructor (props: Props) {
+class UserFavorite extends Component <FavoriteProps, FavoriteState> {
+    constructor (props: FavoriteProps) {
         super(props)
         this.state ={
             product: {
                 name: "",
                 description: "",
                 price: "",
-                imageUrl: ""
-            }
+                imageUrl: "",
+                imageLink: "",
+                owner_id: ""
+            },
+
+            postId: 1
         }
     }
+    componentDidMount() {
+        this.displayFavorite()
+    }
 
-     fetchItems = async() => {
-        const result=
-        fetch('http://localhost:3001/products', {
+     displayFavorite = () => {
+           fetch('http://localhost:3001/favorite/', {
             method: 'Get',
             body: JSON.stringify({
                 product: {
                   name:"",
                   description:"",
                   price: "",
-                  imageUrl:""
+                  imageUrl:"",
+                  owner_id: ""
                 }
             }),
             headers: new Headers({
                 'Content-Type': 'application/json',
             })
-        }).then(
-            (response) => response.json()
-        ).then((result) => {
-           console.log(result)
+        })
+        .then (res => res.json())
+        .then(json => {
+            this.setState({
+                product: json
+            })
+           console.log(json)
+           console.log(this.state.product)
         })
 
         .catch(err => {
             console.error(err)
         })
             
-    }  
+    } 
+
+    handleDelete = (e: React.FormEvent) => {
+        e.preventDefault() 
+                 fetch(`http://localhost:3001/products/${this.state.postId}`, {
+                   method: "Delete",
+                   headers: new Headers({
+                   'Content-Type': "application/json",
+                     'Authorization': `Bearer ${this.props.token}`
+                   })
+                 })
+                 .then(response => response.json())
+                 .then((data) => console.log(data))
+                 .catch((error) => console.log(error));
+                 this.displayFavorite()
+                 }
+    
+    
     
     render() {
         return(
@@ -125,4 +156,4 @@ class UserFavorites extends Component <Props, State> {
 
 }
 
-export default UserFavorites;
+export default UserFavorite;

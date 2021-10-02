@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import {Navbar, Container, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import 'bootswatch/dist/quartz/bootstrap.min.css';
@@ -20,33 +20,33 @@ class UserHeader extends Component<Props, State> {
         }
       }
 
-    updateToken = (newToken: string) => {
-        localStorage.setItem('token', newToken)
-        this.setState({
-          sessionToken: newToken
-        });
-        console.log(this.state.sessionToken)
-      }
-        clearToken = () => {
-          localStorage.clear();
-          this.setState({ sessionToken: ""});
-          console.log("Token cleared and Logged out");
-        };
-      updateRole = (newRole: boolean) => {
-        // new Boolean(this.state.role).toString()
-        localStorage.setItem('role', newRole.toString());
-        console.log(newRole);
-        this.setState({
-          role: newRole
-        })
-        console.log(newRole)
-      }
+    // updateToken = (newToken: string) => {
+    //     localStorage.setItem('token', newToken)
+    //     this.setState({
+    //       sessionToken: newToken
+    //     });
+    //     console.log(this.state.sessionToken)
+    //   }
+    //     clearToken = () => {
+    //       localStorage.clear();
+    //       this.setState({ sessionToken: ""});
+    //       console.log("Token cleared and Logged out");
+    //     };
+    //   updateRole = (newRole: boolean) => {
+    //     // new Boolean(this.state.role).toString()
+    //     localStorage.setItem('role', newRole.toString());
+    //     console.log(newRole);
+    //     this.setState({
+    //       role: newRole
+    //     })
+    //     console.log(newRole)
+    //   }
 
     render() {
         return (
             <Navbar bg="dark" variant="dark">
                 <Container>
-                <Navbar.Brand href='/'>
+                <Navbar.Brand href='/home/user'>
                 Julee's Resin Shop
                 </Navbar.Brand> 
                 <Navbar bg="dark" expand="lg">
@@ -56,7 +56,8 @@ class UserHeader extends Component<Props, State> {
                 </Navbar>
                 <div className="list">
                     <ul>
-                        <Link to="/user/favorites"></Link>
+                        <Link to="/user/favorite">Favorite</Link>
+                        <Link to="/">Sign Out</Link>
                     </ul>
                     </div>
                     <div className='route'>

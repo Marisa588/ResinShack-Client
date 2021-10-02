@@ -36,7 +36,7 @@ class AdminHeader extends Component<HeaderProps, HeaderState> {
                 </Navbar.Brand> 
                     <div className="list">
                     <ul>
-                        <Link to="/admin/products">Products</Link>
+                        {/* <Link to="/admin/products">Products</Link> */}
                         <Link to="/admin/upload">Upload</Link>
                     </ul>
                     </div>

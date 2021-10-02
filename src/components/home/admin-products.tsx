@@ -1,83 +1,99 @@
 import { Component } from 'react';
-import { Card, CardGroup } from 'react-bootstrap';
-import {Navbar, Nav, Container} from 'react-bootstrap';
+import { Card, CardGroup, Button, Modal, Col, Row } from 'react-bootstrap';
 import 'bootswatch/dist/quartz/bootstrap.min.css';
-// import {Link, Route, Switch} from 'react-router-dom';
 
 
 
-type Props = {
-    token: string,
+
+type PostProps = {
+    token: string,   
+    
 }
 
+const accessToken= localStorage.getItem("token")
+
 type ProductsList ={
+    id: number
     name: string,
     description: string,
     price: string,
     imageLink: string,
     imageUrl: string
 }
-type State = {
-    products : ProductsList[]
+type PostState = {
+    products : ProductsList[],
+    postId: number
+    // editModal: boolean
 }
 
 
 
-class AdminProducts extends Component<Props, State> {
-    constructor(props:Props){
+class AdminProducts extends Component<PostProps, PostState> {
+    constructor(props: PostProps){
         super(props)
+        
     this.state ={
-        products: []
+        products: [],
+        postId: 0 ,
+        // editModal: false
     }
 }
 componentDidMount() {
     this.displayProducts()
 }
 displayProducts = () => {
-    fetch('http://localhost:3001/products', {
-        method: 'GET',
-        headers: new Headers({
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.props.token}`
-        })
-    })
-    .then(res => res.json())
-    .then(json => {
-        this.setState({
-            products: json
-        })
-        console.log(json)
-        console.log(this.state.products)
-    })
-    .catch(err => console.log(err))
+  fetch('http://localhost:3001/products', {
+      method: 'GET',
+      headers: new Headers({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.props.token}`
+      })
+  })
+  .then(res => res.json())
+  .then((json) => {
+      this.setState({
+          products: json,
+          postId: json
+      })
+      console.log(json[0].id)
+      // console.log(this.state.products)
+  })
+  .catch(err => console.log(err))
 }
-    //  handleDelete = (e: React.FormEvent) => {
-    //     e.preventDefault() 
-    //              fetch(`http://localhost:3001/${this.state.postId}`, {
-    //                method: "Delete",
-    //                headers: new Headers({
-    //                  "Content-Type": "application/json",
-    //                  "Authorization": `Bearer ${this.props.token}`
-    //                })
-    //              })
-    //              .then(response => response.json())
-    //              .then((data) => {
-    //                console.log(data);
-    //              })
-    //              .catch(err => {
-    //                console.error(err)
-    //              })
-    //             }
+     handleDelete = (e: React.FormEvent) => {
+        e.preventDefault() 
+        console.log(this.props.token)
+                 fetch(`http://localhost:3001/products/${this.state.postId}`, {
+                   method: "Delete",
+                   headers: new Headers({
+                   'Content-Type': 'application/json',
+                     'Authorization': `Bearer ${accessToken}`
+                   })
+                 })
+                 .then(() => this.displayProducts())
+                //  .then((data) => console.log(data))
+                 .catch((error) => console.log(error));
+                //  this.displayProducts()
+                 }
+        // editProducts= (postId: number) => {
+                  //  this.setState({editModal: true})
+        // }
         // handleUpdate = (e: React.FormEvent) => {
         //     e.preventDefault() 
-        //                 fetch(`http://localhost:3001/${postId}`, {
+        //     let newItem = this.state.products
+        //                 fetch(`http://localhost:3001/products/update/${this.state.postId}`, {
         //                 method: "PUT",
+        //                 body: JSON.stringify({
+        //                     products: {
+        //                         products: this.state.products
+        //                     }
+        //                 }),
         //                 headers: new Headers({
         //                     "Content-Type": "application/json",
         //                     "Authorization": `Bearer ${this.props.token}`
         //                 })
         //                 })
-        //                 .then(response => response.json())
+                        
         //                 .then((data) => {
         //                 console.log(data);
         //                 })
@@ -91,46 +107,47 @@ displayProducts = () => {
             <div className='list'>
                 {this.state.products.map((products) => {
     
-            return(
-                <div className= 'productsPage'>
-                    <Navbar bg='dark' variant='dark'>
-                    <Container>
-                    <Navbar.Brand href="/">
-                    Julee's Resin Shop
-                    </Navbar.Brand> 
-                    <Navbar bg="dark" expand="lg">
-                        <Nav className="me-auto">
-                        </Nav>
-                    </Navbar>
-                    </Container>
-                    </Navbar>
-                
+            return (
+              <div className="productsPage">
                 {/* <div className = 'searchbar'>
                     <form class="d-flex">
                         <input class="form-control me-sm-2" type="text" placeholder="Search">
                         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
                 </div> */}
-            <div className="landing-cards">
-            
-                <CardGroup>               
-                    <Card>
-                        <Card.Img variant="top" src="holder.js/100px160" />
-                        <Card.Body>
-                            body
+                {/* <Row> */}
+                {/* <Col md={3}> */}
+                <div className="admin-cards">
+                <CardGroup style={{display: 'flex', flexDirection: 'row'}}>                    
+                      <Card.Img variant="top" src="holder.js/100px160"/>
+                      <Card.Body>
                         <Card.Title>{products.name}</Card.Title>
-                        <Card.Text>
-                        {products.description}
-                        </Card.Text>
-                        </Card.Body>
-                        <Card.Footer>
-                        <small className="text-muted">{products.price}</small>
-                        </Card.Footer>
-                    </Card>
-                    </CardGroup>
-                     
-                    </div>
-                    </div>            
-                )
+                        <Card.Text>{products.description}</Card.Text>
+                      </Card.Body>
+                      <small className="text-muted">{products.price}</small>
+                      <Card.Footer>
+                        <Button onClick={this.handleDelete}>Delete</Button>
+                        {/* <Button onClick={this.handleUpdate}>Update</Button> */}
+                      </Card.Footer>
+                    
+                  </CardGroup>
+                </div>
+                {/* </Col> */}
+                {/* </Row> */}
+                {/* <Modal show={show} onHide={handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Update</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                  <Input name="itemToEdit" type="text" placeholder={this.state.itemToUpdate} onChange={(e) => this.setState({itemToUpdate: e.target.value})}/>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="primary" onClick={() => this.updatePostId()}>
+                      Save Changes
+                    </Button>
+                  </Modal.Footer>
+                </Modal> */}
+              </div>
+            );
             })}
                 </div>
             );

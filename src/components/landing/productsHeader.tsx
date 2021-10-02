@@ -12,10 +12,6 @@ class ProductsHeader extends Component {
         <Navbar bg="dark" variant="dark">
           <Navbar.Brand href="/">Julee's Resin Shop</Navbar.Brand>
         </Navbar>
-        {/* <Navbar bg="dark" expand="lg">
-                      <Nav className="me-auto">
-                      </Nav> */}
-        <Container></Container>
       </div>
     );
   }
