@@ -49,11 +49,12 @@ class Products extends Component<{}, ProductsState> {
         <ProductsHeader />
         
         <div className="grid">
+          
         {this.state.products.map((products) => {
           return (
                 <Container>
                 <CardGroup style={{ width: "18rem" }}>
-                  <Card className="box">
+                  <Card className="box" >
                   <Card.Img variant="top" src={products.imageUrl}/>
                   <Card.Body>
                     <Card.Title>{products.name}</Card.Title>

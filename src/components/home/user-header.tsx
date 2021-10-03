@@ -6,20 +6,40 @@ import "bootswatch/dist/quartz/bootstrap.min.css";
 
 type Props = {
   token: string;
+  // clearToken() : void
 };
+
 type State = {
   role: boolean;
   sessionToken: string;
+  isOpen: boolean;
+  click: boolean;
 };
 
-class UserHeader extends Component<Props, State> {
+class UserSitebar extends Component<Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {
       sessionToken: "",
       role: false,
+      isOpen: false,
+      click: false
     };
+    this.toggle = this.toggle.bind(this);
   }
+  toggle() {
+    this.setState({ isOpen: !this.state.isOpen });
+  }
+
+  handleClick = () => {
+    this.setState({ click: !this.state.click });
+  };
+
+  //   toggle = () => {
+  //     let newIsOpen = !this.state.isOpen;
+  //     this.setState.IsOpen({
+  //       newIsOpen);
+  // }
 
   render() {
     return (
@@ -32,17 +52,26 @@ class UserHeader extends Component<Props, State> {
           <div className="collapse navbar-collapse" id="navbarColor01">
             <ul className="navbar-nav me-auto">
               <li className="nav-item">
-                <a className="nav-link" href="https://www.tiktok.com/@juleesresinshack?lang=en">
-                Etsy
+                <a
+                  className="nav-link"
+                  href="https://www.tiktok.com/@juleesresinshack?lang=en"
+                >
+                  Etsy
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="https://www.etsy.com/shop/JuleesResinShack?ref=simple-shop-header-name&listing_id=1020349146">
+                <a
+                  className="nav-link"
+                  href="https://www.etsy.com/shop/JuleesResinShack?ref=simple-shop-header-name&listing_id=1020349146"
+                >
                   Insta
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="https://www.instagram.com/juleesresinshack/">
+                <a
+                  className="nav-link"
+                  href="https://www.instagram.com/juleesresinshack/"
+                >
                   TikTok
                 </a>
               </li>
@@ -52,11 +81,10 @@ class UserHeader extends Component<Props, State> {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+              <a className="nav-link" href="/" onClick={() => localStorage.clear()}>
                   Sign Out
                 </a>
               </li>
-              
             </ul>
           </div>
         </Container>
@@ -65,4 +93,4 @@ class UserHeader extends Component<Props, State> {
   }
 }
 
-export default UserHeader;
+export default UserSitebar;

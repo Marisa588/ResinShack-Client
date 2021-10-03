@@ -1,10 +1,12 @@
 import  { Component } from 'react';
 import { Card, CardGroup, Button, Container} from 'react-bootstrap';
-import UserHeader from './user-header'
+import UserSitebar from './user-header'
 import "bootswatch/dist/quartz/bootstrap.min.css";
+import FavoriteProduct from './user-product';
 
 type FavoriteProps = {
     token: string,
+    // postId: number
 }
 
  type ProductsList = {
@@ -13,10 +15,13 @@ type FavoriteProps = {
   price: string;
   imageLink: string;
   imageUrl: string;
+  id: number;
+  postId:number
 };
 type FavoriteState = {
   favorite: ProductsList[];
 };
+
 
 class UserFavorite extends Component<FavoriteProps, FavoriteState> {
   constructor(props: FavoriteProps) {
@@ -25,14 +30,14 @@ class UserFavorite extends Component<FavoriteProps, FavoriteState> {
       favorite : []
     };
   }
- 
+
   displayFavorite = () => {
-    console.log(localStorage.getItem("token"))
+    console.log(localStorage.getItem('token'))
     fetch('http://localhost:3001/favorite', {
       method: "GET",
       headers: new Headers({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem("token")}`
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
       }),
     })
       .then((res) => res.json())
@@ -41,21 +46,39 @@ class UserFavorite extends Component<FavoriteProps, FavoriteState> {
           favorite: json,
         });
         console.log(json);
-        console.log(this.state.favorite);
       })
       .catch((err) => console.log(err));
   };
 
   componentDidMount() {
     this.displayFavorite();
-    console.log("componentMounted")
+    console.log('componentMounted')
   }
+
+   
+
+  handleDelete(id: number) {
+    fetch(`http://localhost:3001/favorite/${id}`, {
+      method: "DELETE",
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   render() {
     return (
       <div className="Products">
-        <UserHeader token={this.props.token}/>
-        
+        <UserSitebar token={this.props.token}  />
+
         <div className="grid">
         {this.state.favorite.map((favorite) => {
             return(
@@ -70,14 +93,14 @@ class UserFavorite extends Component<FavoriteProps, FavoriteState> {
                   </Card.Body>
                   <Card.Footer>
                     <Button href={favorite.imageLink}>Gotta Have It!</Button>
-
+                    <Button onClick = {() => this.handleDelete(favorite.id)}>Delete</Button>
                   </Card.Footer>
                   </Card>
-                  </CardGroup> 
+                  </CardGroup>
                 </Container>
             )
         })}
-            </div>    
+            </div>
       </div>
     );
   }

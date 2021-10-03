@@ -1,6 +1,6 @@
 import { Component} from 'react';
 import UserProducts from './user-products';
-import UserHeader from './user-header';
+import UserSitebar from './user-header';
 import 'bootswatch/dist/quartz/bootstrap.min.css';
 
 
@@ -33,7 +33,7 @@ class User extends Component<Props, State> {
     render() {
         return (
             <div>
-                <UserHeader token={this.state.sessionToken} />
+                <UserSitebar token={this.state.sessionToken} />
         <div className="landing-cards">
             <UserProducts token={this.state.sessionToken} updateToken={this.props.updateToken} />
                 </div>

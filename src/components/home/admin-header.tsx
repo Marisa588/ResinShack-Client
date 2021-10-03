@@ -15,21 +15,15 @@ type HeaderState = {
   click: boolean;
 };
 
-class AdminHeader extends Component<HeaderProps, HeaderState> {
+class AdminSitebar extends Component<HeaderProps, HeaderState> {
   constructor(props: HeaderProps) {
     super(props);
     this.state = {
       isOpen: false,
       click: false,
     };
-    this.toggle = this.toggle.bind(this);
   }
 
-  toggle = () => {
-    this.setState({
-      isOpen: !this.state.isOpen,
-    });
-  };
 
   handleClick = () => {
     this.setState({ click: !this.state.click });
@@ -43,7 +37,6 @@ class AdminHeader extends Component<HeaderProps, HeaderState> {
             <Navbar.Brand>Julee's Resin Shop</Navbar.Brand>
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
-              onClick={this.toggle}
             />
             <div className="collapse navbar-collapse" id="navbarColor01">
               <Nav className="me-auto">
@@ -59,7 +52,7 @@ class AdminHeader extends Component<HeaderProps, HeaderState> {
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <a className="nav-link" href="/" onClick={() => localStorage.clear()}>
                       Sign Out
                     </a>
                   </li>
@@ -74,7 +67,7 @@ class AdminHeader extends Component<HeaderProps, HeaderState> {
   }
 }
 
-export default AdminHeader;
+export default AdminSitebar;
 
 {
   /* <Nav.Item>

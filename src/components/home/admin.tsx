@@ -1,5 +1,5 @@
 import { Component} from 'react';
-import AdminHeader from './admin-header';
+import AdminSitebar from './admin-header';
 import AdminProducts from './admin-products';
 
 
@@ -37,7 +37,7 @@ class Admin extends Component<AdminProps, AdminState> {
         return (
             <div>
                
-            <AdminHeader token={this.state.sessionToken} />
+            <AdminSitebar token={this.state.sessionToken} />
             <AdminProducts token={this.state.sessionToken} />
             
             </div>

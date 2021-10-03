@@ -22,7 +22,7 @@ type ProductsList ={
 }
 type PostState = {
     products : ProductsList[]
-    postId: number | null
+
     editModal: boolean
 }
 
@@ -33,7 +33,6 @@ class AdminProducts extends Component<PostProps, PostState> {
         super(props)
     this.state ={
         products: [],
-        postId: 1,
         editModal: false
     }
 }
@@ -58,10 +57,10 @@ displayProducts = () => {
   })
   .catch(err => console.log(err))
 }
-     handleDelete = (e: React.FormEvent) => {
-        e.preventDefault() 
+     handleDelete (id:number) {
+       
         console.log(this.props.token)
-                 fetch(`http://localhost:3001/products/${this.state.products}`, {
+                 fetch(`http://localhost:3001/products/${id}`, {
                    method: "Delete",
                    headers: new Headers({
                    'Content-Type': 'application/json',
@@ -124,7 +123,7 @@ displayProducts = () => {
                       </Card.Body>
                       <small className="text-muted">{products.price}</small>
                       <Card.Footer>
-                        <Button onClick={this.handleDelete}>Delete</Button>
+                        <Button onClick={() => this.handleDelete(products.id)}>Delete</Button>
                         {/* <Button onClick={this.handleUpdate}>Update</Button> */}
                       </Card.Footer>
                     </Card>

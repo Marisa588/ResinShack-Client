@@ -8,7 +8,8 @@ import Upload from './components/home/admin-upload';
 import UserFavorite from './components/home/user-favorite';
 import { Route, Switch, Redirect } from "react-router-dom";
 import Products from './components/landing/products';
-import { Navbar } from 'react-bootstrap';
+import AdminSitebar from './components/home/admin-header';
+import UserSitebar from './components/home/user-header';
 
 
 type State = {
@@ -49,6 +50,7 @@ class App extends Component<{} , State> {
   clearToken = () => {
     this.setState({ 
       sessionToken: '', 
+      sessionRole: false
     });
     localStorage.clear();
   }
@@ -61,15 +63,15 @@ class App extends Component<{} , State> {
   }
 
   ifAuthenticated = (comp: ReactElement) => {
-    return this.state.sessionToken ? comp : <Redirect to="/" />
+    return this.state.sessionToken ? comp : <Redirect to="/home/user" />
   }
   ifAdmin = (comp: ReactElement) => {
     return this.state.sessionRole === true ? comp : <Redirect to = "/home/admin" />
   }
 
-  // ifUser = (comp: ReactElement) => {
-  //   return this.state.sessionRole === false ? comp : <Redirect to ="/home/user"/>
-  // }
+  ifUser = (comp: ReactElement) => {
+    return this.state.sessionRole === false ? comp : <Redirect to ="/home/user"/>
+  }
 
   render() {
     return (
@@ -85,7 +87,7 @@ class App extends Component<{} , State> {
             {this.ifAdmin(<Admin token={this.state.sessionToken} role={this.state.sessionRole}/>)}
           </Route>
           <Route exact path="/home/user">
-          <User token={this.state.sessionToken} updateToken={this.updateToken} role={this.state.sessionRole} />
+          {this.ifUser(<User token={this.state.sessionToken} updateToken={this.updateToken} role={this.state.sessionRole} />)}
           </Route>
           <Route path="/products">
             <Products/>
@@ -97,7 +99,7 @@ class App extends Component<{} , State> {
             <UserFavorite token={this.state.sessionToken} />
           </Route>
           <Route path = "/">
-            <Navbar onClick = {this.clearToken} />
+            
           </Route>
         </Switch>
       </div>
