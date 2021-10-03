@@ -7,6 +7,7 @@ import 'bootswatch/dist/quartz/bootstrap.min.css';
 
 type Props ={
     token: string,
+    updateToken(newToken: string): void,
    role: boolean
 };
 
@@ -34,7 +35,7 @@ class User extends Component<Props, State> {
             <div>
                 <UserHeader token={this.state.sessionToken} />
         <div className="landing-cards">
-            <UserProducts token={this.state.sessionToken} />
+            <UserProducts token={this.state.sessionToken} updateToken={this.props.updateToken} />
                 </div>
                 </div>
         )

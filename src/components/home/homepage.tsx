@@ -13,7 +13,6 @@ type HomeProps = {
 type HomeState = {
   sessionRole: boolean;
   sessionToken: string;
-  redirectToHome: boolean
 
 };
 
@@ -23,7 +22,6 @@ class Home extends Component<HomeProps, HomeState> {
     this.state = {
       sessionRole: false,
       sessionToken: "",
-      redirectToHome: false,
     };
   }
   render() {
@@ -33,7 +31,7 @@ class Home extends Component<HomeProps, HomeState> {
       <div>
       {localStorage.getItem("role") === "true" ? (
          <Admin token={this.state.sessionToken} role = {this.state.sessionRole} /> 
-      ) : <User token={this.state.sessionToken} role = {this.state.sessionRole} /> }
+      ) : <User token={this.state.sessionToken} role = {this.state.sessionRole} updateToken={this.props.updateToken} /> }
      
       
       

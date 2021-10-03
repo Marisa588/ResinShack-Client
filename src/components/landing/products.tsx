@@ -1,6 +1,7 @@
 import { Component } from "react";
-import { Card, CardGroup, Container, Row, Col } from "react-bootstrap";
+import { Card, CardGroup, Button, Container} from "react-bootstrap";
 import ProductsHeader from "./productsHeader";
+
 import "bootswatch/dist/quartz/bootstrap.min.css";
 
 type ProductsList = {
@@ -44,32 +45,30 @@ class Products extends Component<{}, ProductsState> {
 
   render() {
     return (
-      <div className="list"> 
-       <ProductsHeader />
+      <div className="Products">
+        <ProductsHeader />
+        
+        <div className="grid">
         {this.state.products.map((products) => {
           return (
-            // <div className="productsPage">
-            /* <div className = 'searchbar'>
-                <form class="d-flex">
-                    <input class="form-control me-sm-2" type="text" placeholder="Search">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-            </div> */
-            <Container className= "flexwrap: wrap">
-              <Row>
-                  <CardGroup style={{display: 'flex', flexDirection: 'row'}}>
-                      <Card.Img variant="top" src={products.imageUrl} />
-                      <Card.Body>
-                        <Card.Title>{products.name}</Card.Title>
-                        <Card.Text>{products.description}</Card.Text>
-                      </Card.Body>
-                      <Card.Footer>
-                        <small className="text-muted">{products.price}</small>
-                      </Card.Footer>
-                  </CardGroup>
-               </Row> 
-            </Container>
-          );
-        })}
+                <Container>
+                <CardGroup style={{ width: "18rem" }}>
+                  <Card className="box">
+                  <Card.Img variant="top" src={products.imageUrl}/>
+                  <Card.Body>
+                    <Card.Title>{products.name}</Card.Title>
+                    <Card.Text>{products.description}</Card.Text>
+                    <small className="text-muted">{products.price}</small>
+                  </Card.Body>
+                  <Card.Footer>
+                    <Button href={products.imageLink}>Gotta Have It!</Button>
+                  </Card.Footer>
+                  </Card>
+                  </CardGroup> 
+                </Container>
+              );
+            })}   
+            </div>    
       </div>
     );
   }

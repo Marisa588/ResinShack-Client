@@ -21,9 +21,9 @@ type ProductsList ={
     imageUrl: string
 }
 type PostState = {
-    products : ProductsList[],
-    postId: number
-    // editModal: boolean
+    products : ProductsList[]
+    postId: number | null
+    editModal: boolean
 }
 
 
@@ -31,11 +31,10 @@ type PostState = {
 class AdminProducts extends Component<PostProps, PostState> {
     constructor(props: PostProps){
         super(props)
-        
     this.state ={
         products: [],
-        postId: 0 ,
-        // editModal: false
+        postId: 1,
+        editModal: false
     }
 }
 componentDidMount() {
@@ -50,24 +49,23 @@ displayProducts = () => {
       })
   })
   .then(res => res.json())
-  .then((json) => {
+  .then(json => {
       this.setState({
-          products: json,
-          postId: json
+          products: json
       })
-      console.log(json[0].id)
-      // console.log(this.state.products)
+      console.log(json)
+      console.log(this.state.products)
   })
   .catch(err => console.log(err))
 }
      handleDelete = (e: React.FormEvent) => {
         e.preventDefault() 
         console.log(this.props.token)
-                 fetch(`http://localhost:3001/products/${this.state.postId}`, {
+                 fetch(`http://localhost:3001/products/${this.state.products}`, {
                    method: "Delete",
                    headers: new Headers({
                    'Content-Type': 'application/json',
-                     'Authorization': `Bearer ${accessToken}`
+                     'Authorization': `Bearer ${localStorage.getItem("token")}`
                    })
                  })
                  .then(() => this.displayProducts())
@@ -117,8 +115,9 @@ displayProducts = () => {
                 {/* <Row> */}
                 {/* <Col md={3}> */}
                 <div className="admin-cards">
-                <CardGroup style={{display: 'flex', flexDirection: 'row'}}>                    
-                      <Card.Img variant="top" src="holder.js/100px160"/>
+                  <CardGroup>
+                    <Card style={{ maxWidth: "22rem" }}>
+                      <Card.Img variant="top" src={products.imageUrl}/>
                       <Card.Body>
                         <Card.Title>{products.name}</Card.Title>
                         <Card.Text>{products.description}</Card.Text>
@@ -128,7 +127,7 @@ displayProducts = () => {
                         <Button onClick={this.handleDelete}>Delete</Button>
                         {/* <Button onClick={this.handleUpdate}>Update</Button> */}
                       </Card.Footer>
-                    
+                    </Card>
                   </CardGroup>
                 </div>
                 {/* </Col> */}

@@ -1,14 +1,14 @@
-import React, { Component, ReactElement } from "react";
-import "./App.css";
-// import 'bootswatch/dist/quartz/bootstrap.min.css';
-import Landing from "./components/landing/landing";
-import Home from "./components/home/homepage";
-import Admin from "./components/home/admin";
+import React, { Component, ReactElement } from 'react';
+import './App.css';
+import Landing from './components/landing/landing';
+import Home from './components/home/homepage';
+import Admin from './components/home/admin';
 import User from './components/home/user';
 import Upload from './components/home/admin-upload';
 import UserFavorite from './components/home/user-favorite';
 import { Route, Switch, Redirect } from "react-router-dom";
-import Products from "./components/landing/products";
+import Products from './components/landing/products';
+import { Navbar } from 'react-bootstrap';
 
 
 type State = {
@@ -47,9 +47,11 @@ class App extends Component<{} , State> {
   };
 
   clearToken = () => {
+    this.setState({ 
+      sessionToken: '', 
+    });
     localStorage.clear();
-    this.setState({ sessionToken: "" });
-  };
+  }
 
   updateRole = (newRole: boolean) => {
     localStorage.setItem("role", String(newRole));
@@ -83,7 +85,7 @@ class App extends Component<{} , State> {
             {this.ifAdmin(<Admin token={this.state.sessionToken} role={this.state.sessionRole}/>)}
           </Route>
           <Route exact path="/home/user">
-          <User token={this.state.sessionToken} role={this.state.sessionRole} />
+          <User token={this.state.sessionToken} updateToken={this.updateToken} role={this.state.sessionRole} />
           </Route>
           <Route path="/products">
             <Products/>
@@ -91,8 +93,11 @@ class App extends Component<{} , State> {
           <Route path="/admin/upload">
             <Upload token={this.state.sessionToken} updateToken={this.updateToken}/>
           </Route>
-          <Route path = "/user/favorite">
+          <Route path = "/favorite">
             <UserFavorite token={this.state.sessionToken} />
+          </Route>
+          <Route path = "/">
+            <Navbar onClick = {this.clearToken} />
           </Route>
         </Switch>
       </div>

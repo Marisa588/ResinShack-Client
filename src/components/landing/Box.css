@@ -1,0 +1,16 @@
+ .box { 
+    height: 200px;
+     max-height: 35vh; 
+
+  }  
+.grid{
+    min-height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+     
+ } 
+
+/* .grid > div {
+    flex-basis: clac(20%-40px);
+} */

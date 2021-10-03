@@ -1,12 +1,17 @@
-import  { Component } from 'react';
-import { Card, CardGroup, Button} from 'react-bootstrap';
+import  React, { Component } from 'react';
+import { Card, CardGroup, Button, Row, Col} from 'react-bootstrap';
+import FavoriteProduct from './user-product';
 
 
 
-type Props = {
+
+type UserProps = {
     token: string,
+    updateToken(newToken: string): void,
     
 };
+
+const accessToken= localStorage.getItem("token")
 
 type ProductsList ={
     name: string,
@@ -14,17 +19,33 @@ type ProductsList ={
     price: string,
     imageLink: string,
     imageUrl: string,
-    // owner_id: id
+    owner_id: number
 }
 
-type State = {
-    products : ProductsList[]
+type UserState = {
+    favorite: {
+        name: string,
+        description: string,
+        price: string,
+        imageUrl: string,
+        imageLink: string,
+        postId: number | undefined
+     }
+    products : ProductsList[],
 }
 
-class UserProducts extends Component <Props, State> {
-    constructor (props: Props) {
+class UserProducts extends Component <UserProps, UserState> {
+    constructor (props: UserProps) {
         super(props)
         this.state ={
+            favorite: {
+                name: '',
+                description: '',
+                price: '',
+                imageUrl: '',
+                imageLink: '',
+                postId: undefined
+             },
             products: []
         }
     }
@@ -37,6 +58,7 @@ class UserProducts extends Component <Props, State> {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.props.token}`
             })
         })
         .then(res => res.json())
@@ -50,66 +72,20 @@ class UserProducts extends Component <Props, State> {
         .catch(err => console.log(err))
     }
 
-    // postFavorite = () => {
-    //     fetch('http://localhost:3001/favorite/', {
-    //         method: 'Post',
-    //         body: JSON.stringify({
-    //             product: {
-    //                 name: this.state.product.name, 
-    //                 description: this.state.product.description, 
-    //                 price: this.state.product.price, 
-    //                 imageLink: this.state.product.imageLink, 
-    //                 imageUrl: this.state.product.imageUrl,
-    //                 postId: this.state.product.postId 
 
-    //             }
-    //         })
-    //     })
-    // }
-    
     render() {
         return(
             <div className='list'>
-                
-            {this.state.products.map((products) => {
+                {this.state.products.map((favorite) => {
 
         return(
-            <div className= 'productsPage'>
-            
-            <div className = 'searchbar'>
-                {/* <form class="d-flex">
-                    <input class="form-control me-sm-2" type="text" placeholder="Search">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                    </input>
-                </form> */}
-            </div>
-        <div className="landing-cards">
-            
-        
-            <CardGroup>               
-                <Card>
-                    <Card.Img variant="top" src="holder.js/100px160" />
-                    <Card.Body>
-                        body
-                    <Card.Title>{products.name}</Card.Title>
-                    <Card.Text>
-                    {products.description}
-                    </Card.Text>
-                    </Card.Body>
-                    <small className="text-muted">{products.price}</small>
-                    <Card.Footer>
-                    <Button>Like</Button>
-                    </Card.Footer>
-                </Card>
-                </CardGroup>
-                
-                </div>
-                </div>            
+            <FavoriteProduct favorite={favorite} />
             )
         })}
         </div>
         )
     }
+
 
 }
 

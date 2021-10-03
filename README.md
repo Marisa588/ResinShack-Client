@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Resin Shack-Client
 
 Resin Shack uses React Typescript and React-Bootstrap
