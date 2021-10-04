@@ -10,7 +10,6 @@ type SignInProps ={
 };
 
 type SignInState = {
-    // token: string,
     username: string,
     password: string,
     redirectToHomepage: boolean
@@ -21,7 +20,6 @@ type SignInState = {
         constructor(props: SignInProps){
             super(props)
             this.state ={            
-                // token: props.token,
                 username: '',
                 password: '',
                 redirectToHomepage: false,

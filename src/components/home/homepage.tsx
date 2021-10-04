@@ -1,19 +1,16 @@
 import { Component } from "react";
-import Admin from './admin';
-import User from './user';
-
-
+import Admin from "./admin";
+import User from "./user";
 
 type HomeProps = {
-  token: string,
-  role: boolean,
-  updateToken(newToken: string): void,
+  token: string;
+  role: boolean;
+  updateToken(newToken: string): void;
 };
 
 type HomeState = {
   sessionRole: boolean;
   sessionToken: string;
-
 };
 
 class Home extends Component<HomeProps, HomeState> {
@@ -25,20 +22,22 @@ class Home extends Component<HomeProps, HomeState> {
     };
   }
   render() {
-  
-    
-    return(
+    return (
       <div>
-      {localStorage.getItem("role") === "true" ? (
-         <Admin token={this.state.sessionToken} role = {this.state.sessionRole} /> 
-      ) : <User token={this.state.sessionToken} role = {this.state.sessionRole} updateToken={this.props.updateToken} /> }
-     
-      
-      
-      
-       
-       </div>
-    )
+        {localStorage.getItem("role") === "true" ? (
+          <Admin
+            token={this.state.sessionToken}
+            role={this.state.sessionRole}
+          />
+        ) : (
+          <User
+            token={this.state.sessionToken}
+            role={this.state.sessionRole}
+            updateToken={this.props.updateToken}
+          />
+        )}
+      </div>
+    );
   }
 }
 

@@ -1,8 +1,8 @@
 import { Component } from "react";
 import { Card, CardGroup, Button, Container} from "react-bootstrap";
 import ProductsHeader from "./productsHeader";
-
 import "bootswatch/dist/quartz/bootstrap.min.css";
+import "./card.css";
 
 type ProductsList = {
   name: string;
@@ -47,29 +47,28 @@ class Products extends Component<{}, ProductsState> {
     return (
       <div className="Products">
         <ProductsHeader />
-        
+
         <div className="grid">
-          
-        {this.state.products.map((products) => {
-          return (
-                <Container>
-                <CardGroup style={{ width: "18rem" }}>
-                  <Card className="box" >
-                  <Card.Img variant="top" src={products.imageUrl}/>
-                  <Card.Body>
-                    <Card.Title>{products.name}</Card.Title>
-                    <Card.Text>{products.description}</Card.Text>
-                    <small className="text-muted">{products.price}</small>
-                  </Card.Body>
-                  <Card.Footer>
-                    <Button href={products.imageLink}>Gotta Have It!</Button>
-                  </Card.Footer>
+          {this.state.products.map((products) => {
+            return (
+              <Container>
+                <CardGroup style={{ width: "20rem" }}>
+                  <Card className="box">
+                    <Card.Img variant="top" src={products.imageUrl} />
+                    <Card.Body>
+                      <Card.Title>{products.name}</Card.Title>
+                      <Card.Text>{products.description}</Card.Text>
+                      <small className="text-muted">{products.price}</small>
+                    </Card.Body>
+                    <Card.Footer>
+                      <Button href={products.imageLink}>Gotta Have It!</Button>
+                    </Card.Footer>
                   </Card>
-                  </CardGroup> 
-                </Container>
-              );
-            })}   
-            </div>    
+                </CardGroup>
+              </Container>
+            );
+          })}
+        </div>
       </div>
     );
   }

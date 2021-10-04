@@ -1,28 +1,25 @@
-import React, { Component, ReactElement } from 'react';
-import './App.css';
-import Landing from './components/landing/landing';
-import Home from './components/home/homepage';
-import Admin from './components/home/admin';
-import User from './components/home/user';
-import Upload from './components/home/admin-upload';
-import UserFavorite from './components/home/user-favorite';
+import { Component, ReactElement } from "react";
+import "./App.css";
+import Landing from "./components/landing/landing";
+import Home from "./components/home/homepage";
+import Admin from "./components/home/admin";
+import User from "./components/home/user";
+import Upload from "./components/home/admin-upload";
+import UserFavorite from "./components/home/user-favorite";
 import { Route, Switch, Redirect } from "react-router-dom";
-import Products from './components/landing/products';
-import AdminSitebar from './components/home/admin-header';
-import UserSitebar from './components/home/user-header';
-
+import Products from "./components/landing/products";
 
 type State = {
   sessionRole: boolean;
   sessionToken: string;
 };
 
-class App extends Component<{} , State> {
-  constructor(props: {} ) {
+class App extends Component<{}, State> {
+  constructor(props: {}) {
     super(props);
     this.state = {
       sessionToken: "",
-      sessionRole: false ,
+      sessionRole: false,
     };
   }
 
@@ -33,8 +30,8 @@ class App extends Component<{} , State> {
       });
     }
     if (localStorage.getItem("role")) {
-      this.setState({ 
-        sessionRole: Boolean(localStorage.getItem("role")) 
+      this.setState({
+        sessionRole: Boolean(localStorage.getItem("role")),
       });
     }
   }
@@ -48,59 +45,89 @@ class App extends Component<{} , State> {
   };
 
   clearToken = () => {
-    this.setState({ 
-      sessionToken: '', 
-      sessionRole: false
+    this.setState({
+      sessionToken: "",
+      sessionRole: false,
     });
     localStorage.clear();
-  }
+  };
 
   updateRole = (newRole: boolean) => {
     localStorage.setItem("role", String(newRole));
     this.setState({
       sessionRole: newRole,
     });
-  }
+  };
 
   ifAuthenticated = (comp: ReactElement) => {
-    return this.state.sessionToken ? comp : <Redirect to="/home/user" />
-  }
+    return this.state.sessionToken ? comp : <Redirect to="/home/user" />;
+  };
   ifAdmin = (comp: ReactElement) => {
-    return this.state.sessionRole === true ? comp : <Redirect to = "/home/admin" />
-  }
+    return this.state.sessionRole === true ? (
+      comp
+    ) : (
+      <Redirect to="/home/admin" />
+    );
+  };
 
-  ifUser = (comp: ReactElement) => {
-    return this.state.sessionRole === false ? comp : <Redirect to ="/home/user"/>
-  }
+  // ifUser = (comp: ReactElement) => {
+  //   return this.state.sessionRole === false ? (
+  //     comp
+  //   ) : (
+  //     <Redirect to="/home/user" />
+  //   );
+  // };
 
   render() {
     return (
       <div className="App">
         <Switch>
           <Route exact path="/">
-            <Landing token={this.state.sessionToken} updateToken={this.updateToken} updateRole={this.updateRole}/>
+            <Landing
+              token={this.state.sessionToken}
+              updateToken={this.updateToken}
+              updateRole={this.updateRole}
+            />
           </Route>
           <Route path="/home">
-            {this.ifAuthenticated(<Home token={this.state.sessionToken} role={this.state.sessionRole} updateToken={this.updateToken} />)}
+            {this.ifAuthenticated(
+              <Home
+                token={this.state.sessionToken}
+                role={this.state.sessionRole}
+                updateToken={this.updateToken}
+              />
+            )}
           </Route>
           <Route exact path="/home/admin">
-            {this.ifAdmin(<Admin token={this.state.sessionToken} role={this.state.sessionRole}/>)}
+            {this.ifAdmin(
+              <Admin
+                token={this.state.sessionToken}
+                role={this.state.sessionRole}
+              />
+            )}
           </Route>
           <Route exact path="/home/user">
-          {this.ifUser(<User token={this.state.sessionToken} updateToken={this.updateToken} role={this.state.sessionRole} />)}
+            {/* {this.ifUser( */}
+              <User
+                token={this.state.sessionToken}
+                updateToken={this.updateToken}
+                role={this.state.sessionRole}
+              />
+            {/* )} */}
           </Route>
           <Route path="/products">
-            <Products/>
+            <Products />
           </Route>
           <Route path="/admin/upload">
-            <Upload token={this.state.sessionToken} updateToken={this.updateToken}/>
+            <Upload
+              token={this.state.sessionToken}
+              updateToken={this.updateToken}
+            />
           </Route>
-          <Route path = "/favorite">
+          <Route path="/favorite">
             <UserFavorite token={this.state.sessionToken} />
           </Route>
-          <Route path = "/">
-            
-          </Route>
+          <Route path="/"></Route>
         </Switch>
       </div>
     );

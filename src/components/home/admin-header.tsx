@@ -1,13 +1,8 @@
 import { Component } from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { Redirect } from "react-router-dom";
-
-// import AdminUpload from './admin-upload';
 
 type HeaderProps = {
   token: string;
-  // clearToken: () => void;
 };
 
 type HeaderState = {
@@ -24,24 +19,22 @@ class AdminSitebar extends Component<HeaderProps, HeaderState> {
     };
   }
 
-
   handleClick = () => {
     this.setState({ click: !this.state.click });
   };
 
   render() {
     return (
-      <div className="admin header">
+      // <div className="admin header">
         <Navbar bg="dark" variant="dark">
-          <Container>
+          <Container className="fluid">
+          <div className="container-fluid">
             <Navbar.Brand>Julee's Resin Shop</Navbar.Brand>
-            <Navbar.Toggle
-              aria-controls="basic-navbar-nav"
-            />
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <div className="collapse navbar-collapse" id="navbarColor01">
               <Nav className="me-auto">
                 <ul className="navbar-nav me-auto">
-                <li className="nav-item">
+                  <li className="nav-item">
                     <a className="nav-link" href="/home/admin">
                       Home
                     </a>
@@ -52,29 +45,23 @@ class AdminSitebar extends Component<HeaderProps, HeaderState> {
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="/" onClick={() => localStorage.clear()}>
+                    <a
+                      className="nav-link"
+                      href="/"
+                      onClick={() => localStorage.clear()}
+                    >
                       Sign Out
                     </a>
                   </li>
                 </ul>
               </Nav>
             </div>
-            {/* </Navbar.Collapse> */}
+            </div>
           </Container>
         </Navbar>
-      </div>
+      // </div>
     );
   }
 }
 
 export default AdminSitebar;
-
-{
-  /* <Nav.Item>
-      {/* <Nav.Link onClick={this.props.clearToken}> */
-}
-// <Link to="/" className='nav-link text-white nav-item' onClick={this.toggle}>Log Out</Link>
-{
-  /* </Nav.Link> */
-}
-// </Nav.Item> */}

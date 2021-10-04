@@ -1,120 +1,94 @@
-// import React, { Component } from 'react';
-// // import { Redirect, Link } from 'react-router-dom';
-// import { Form, FormGroup, Button, Modal } from 'react-bootstrap';
-// import AdminUpload from './admin-upload';
+// import { Modal, Button } from "react-bootstrap";
+// import React, { Component } from "react";
 
-// type PostProps = {
-//   token: string;
-//   updateToken(newToken: string): void;
-// };
-
-// type ProductsList = {
-//   // id: number | null
-//   name: string;
-//   description: string;
-//   price: string;
-//   imageLink: string;
-//   imageUrl: string;
-// };
-
-// type PostState = {
-//   products: ProductsList[];
-//   postId: number | null;
-//   handleClose: boolean;
-//   handleShow: boolean;
-//   show: boolean;
-// };
-
-// class Update extends Component<PostProps, PostState> {
-//   constructor(props: PostProps) {
+// class Modal extends Component {
+//   constructor(props) {
 //     super(props);
+//     this.handleSave = this.handleSave.bind(this);
 //     this.state = {
-//       products: [],
-//       postId: 1,
-//       handleClose: false,
-//       handleShow: true,
-//       show: false,
+//       name: "",
+//       description: "",
+//       price: "",
+//       imageLink: "",
 //     };
 //   }
-//   componentDidMount() {
-//     this.handleUpdate();
+
+//   componentWillReceiveProps(nextProps) {
+//     this.setState({
+//       name: nextProps.name,
+//       description: nextProps.description,
+//       price: nextProps.price,
+//       imageLink: nextProps.imageLink,
+//     });
 //   }
-//   handleUpdate = () => {
-//     fetch(`http://localhost:3001/products/update/${this.state.postId}`, {
-//       method: "PUT",
-//       headers: new Headers({
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${this.props.token}`,
-//       }),
-//     })
-//       .then((res) => res.json())
-//       .then((json) => {
-//         this.setState({
-//           products: json,
-//         });
-//         console.log(json);
-//         console.log(this.state.products);
-//       })
-//       .catch((err) => console.log(err));
-//   };
 
-//   // handleUpdate = (e: React.FormEvent) => {
-//   //     e.preventDefault()
-//   //                 fetch(`http://localhost:3001/products/update/${this.state.postId}`, {
-//   //                 method: "PUT",
-//   //                 body: JSON.stringify({
-//   //                     products: {
-//   //                         name: this.state.products.name,
-//   //                     }
-//   //                 })
-//   //                 headers: new Headers({
-//   //                     "Content-Type": "application/json",
-//   //                     "Authorization": `Bearer ${this.props.token}`
-//   //                 })
-//   //                 })
+//   nameHandler(e) {
+//     this.setState({ name: e.target.value });
+//   }
 
-//   //                 .then((data) => {
-//   //                 console.log(data);
-//   //                 })
-//   //                 .catch(err => {
-//   //                 console.error(err)
-//   //                 })
-//   //     onst body = (
-//       <div>
-//       <h2>Text in a modal</h2>
-//         <AdminUpload token={this.props.token}/>
-//     </div>
-//   );
-//         }
+//   descriptionHandler(e) {
+//     this.setState({ description: e.target.value });
+//   }
+
+//   priceHandler(e) {
+//     this.setState({ price: e.target.value });
+//   }
+
+//   imageLinkHandler(e) {
+//     this.setState({ imageLink: e.target.value });
+//   }
+
+//   handleSave() {
+//     const item = this.state;
+//     this.props.saveModalDetails(item);
+//   }
+
 //   render() {
 //     return (
-//       <div className="list">
-//         {/* {this.state.products.map((products) => { */}
+//       <Modal.Dialog>
+//         <Modal.Header closeButton>
+//           <Modal.Title>Update Post</Modal.Title>
+//         </Modal.Header>
 
-//         {/* return( */}
-//         <Button variant="primary" onClick={this.state.handleShow}>
-//           Update
-//         </Button>
-//         <Modal show={this.state.show} onHide={this.state.handleClose}>
-//           <Modal.Header closeButton>
-//             <Modal.Title>Update Product</Modal.Title>
-//           </Modal.Header>
-//           <Modal.Body>
+//         <Modal.Body>
+//           <p>
+//             <span className="modal-lable">Name:</span>
+//             <input
+//               value={this.state.name}
+//               onChange={(e) => this.nameHandler(e)}
+//             />
+//           </p>
+//           <p>
+//             <span className="modal-lable">Description:</span>
+//             <input
+//               value={this.state.description}
+//               onChange={(e) => this.descriptionHandler(e)}
+//             />
+//           </p>
+//           <p>
+//             <span className="modal-lable">Price:</span>
+//             <input
+//               value={this.state.price}
+//               onChange={(e) => this.priceHandler(e)}
+//             />
+//           </p>
+//           <p>
+//             <span className="modal-lable">Image Link</span>
+//             <input
+//               value={this.state.imageLink}
+//               onChange={(e) => this.imageLinkHandler(e)}
+//             />
+//           </p>
+//         </Modal.Body>
 
-//           </Modal.Body>
-//           <Modal.Footer>
-//             <Button variant="secondary" onClick={this.state.handleClose}>
-//               Close
-//             </Button>
-//             <Button variant="primary" onClick={this.state.handleClose}>
-//               Save Changes
-//             </Button>
-//           </Modal.Footer>
-//         </Modal>
-//       </div>
+//         <Modal.Footer>
+//           <Button variant="secondary">Close</Button>
+//           <Button variant="primary">Save changes</Button>
+//         </Modal.Footer>
+//       </Modal.Dialog>
 //     );
 //   }
 // }
 
-// export default Update;
+// export default Modal;
 export {}

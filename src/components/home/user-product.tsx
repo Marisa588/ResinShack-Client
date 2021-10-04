@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { Card, CardGroup, Button, Row, Col } from "react-bootstrap";
 
 type FavoriteProps = {
@@ -40,13 +40,11 @@ class FavoriteProduct extends Component<FavoriteProps> {
       });
   };
 
-
   render() {
     return (
       <div className="card border-primary mb-3" style={{ width: "20rem" }}>
-        <Row style={{ width: "20rem" }}>
-          <Col>
-            <CardGroup style={{ display: "flex", flexDirection: "row" }}>
+            <CardGroup style={{ display: "flex", flexDirection: "row"}} >
+              <Card style={{ width:"575.98px" }}>
               <Card.Img variant="top" src={this.props.favorite.imageUrl} />
               <Card.Body>
                 <Card.Title>{this.props.favorite.name}</Card.Title>
@@ -59,9 +57,8 @@ class FavoriteProduct extends Component<FavoriteProps> {
                 <Button onClick={() => this.handleSubmit()}> Favorite!</Button>
                 <Button href={this.props.favorite.imageLink}>Buy!</Button>
               </Card.Footer>
+              </Card>
             </CardGroup>
-          </Col>
-        </Row>
       </div>
     );
   }

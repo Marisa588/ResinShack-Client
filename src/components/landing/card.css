@@ -1,0 +1,21 @@
+/* .box {
+  height: 200px;
+  max-height: 35vh;
+} */
+.Card.Body {
+  min-height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+} 
+.Card.Img {
+  height: 100%
+}
+
+.Container {
+min-width: 576px;
+
+}
+/* .grid > div {
+    flex-basis: clac(20%-40px);
+} */
