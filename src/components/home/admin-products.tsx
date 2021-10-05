@@ -6,7 +6,7 @@ type PostProps = {
   token: string;
 };
 
-const accessToken = localStorage.getItem("token");
+
 
 type ProductsList = {
   id: number;
@@ -52,7 +52,7 @@ class AdminProducts extends Component<PostProps, PostState> {
       .catch((err) => console.log(err));
   };
   handleDelete(id: number) {
-    console.log(this.props.token);
+    console.log(localStorage.getItem("token"));
     fetch(`http://localhost:3001/products/${id}`, {
       method: "Delete",
       headers: new Headers({

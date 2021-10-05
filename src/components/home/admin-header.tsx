@@ -30,8 +30,7 @@ class AdminSitebar extends Component<HeaderProps, HeaderState> {
           <Container className="fluid">
           <div className="container-fluid">
             <Navbar.Brand>Julee's Resin Shop</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <div className="collapse navbar-collapse" id="navbarColor01">
+            <div className="collapse navbar-collapse">
               <Nav className="me-auto">
                 <ul className="navbar-nav me-auto">
                   <li className="nav-item">

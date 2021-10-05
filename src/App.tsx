@@ -70,13 +70,6 @@ class App extends Component<{}, State> {
     );
   };
 
-  // ifUser = (comp: ReactElement) => {
-  //   return this.state.sessionRole === false ? (
-  //     comp
-  //   ) : (
-  //     <Redirect to="/home/user" />
-  //   );
-  // };
 
   render() {
     return (
@@ -107,13 +100,11 @@ class App extends Component<{}, State> {
             )}
           </Route>
           <Route exact path="/home/user">
-            {/* {this.ifUser( */}
               <User
                 token={this.state.sessionToken}
                 updateToken={this.updateToken}
                 role={this.state.sessionRole}
               />
-            {/* )} */}
           </Route>
           <Route path="/products">
             <Products />
