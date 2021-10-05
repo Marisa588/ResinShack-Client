@@ -56,7 +56,7 @@ class SignUp extends Component<SignUpProps, SignUpState> {
             user: {
                 username: this.state.username,
                 password: this.state.password,
-                role: true
+                role: false
             }
         }),
         headers: new Headers({

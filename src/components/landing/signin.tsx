@@ -36,7 +36,7 @@ type SignInState = {
                     user: {
                         username: this.state.username,
                         password: this.state.password,
-                        role: true
+                        
                     }
                 }),
                 headers: new Headers({
@@ -48,7 +48,7 @@ type SignInState = {
                 this.props.updateToken(data.sessionToken)
                 this.props.updateRole(data.user.role)
                 console.log(data.user.role)
-                this.setState({redirectToHomepage: true, role: data.user.role})
+                this.setState({redirectToHomepage: true})
             })
             .catch(err => {
                 console.log(err)
