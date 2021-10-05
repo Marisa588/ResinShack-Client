@@ -3,6 +3,7 @@ import { Card, CardGroup, Button, Container } from "react-bootstrap";
 import UserSitebar from "./user-header";
 import "bootswatch/dist/quartz/bootstrap.min.css";
 import "./card.css";
+import APIURL from "../../helpers/environment";
 
 type FavoriteProps = {
   token: string;
@@ -31,7 +32,7 @@ class UserFavorite extends Component<FavoriteProps, FavoriteState> {
 
   displayFavorite = () => {
     console.log(localStorage.getItem("token"));
-    fetch("http://localhost:3001/favorite", {
+    fetch(`${APIURL}/favorite`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -54,7 +55,7 @@ class UserFavorite extends Component<FavoriteProps, FavoriteState> {
   }
 
   handleDelete(id: number) {
-    fetch(`http://localhost:3001/favorite/${id}`, {
+    fetch(`${APIURL}/favorite/${id}`, {
       method: "DELETE",
       headers: new Headers({
         "Content-Type": "application/json",

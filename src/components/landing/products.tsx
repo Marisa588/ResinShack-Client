@@ -3,6 +3,7 @@ import { Card, CardGroup, Button, Container} from "react-bootstrap";
 import ProductsHeader from "./productsHeader";
 import "bootswatch/dist/quartz/bootstrap.min.css";
 import "./card.css";
+import APIURL from "../../helpers/environment";
 
 type ProductsList = {
   name: string;
@@ -26,7 +27,7 @@ class Products extends Component<{}, ProductsState> {
     this.displayProducts();
   }
   displayProducts = () => {
-    fetch("http://localhost:3001/products", {
+    fetch(`${APIURL}/products`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",

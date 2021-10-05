@@ -1,5 +1,6 @@
 import { Component } from "react";
 import FavoriteProduct from "./user-product";
+import APIURL from "../../helpers/environment";
 
 type UserProps = {
   token: string;
@@ -48,7 +49,7 @@ class UserProducts extends Component<UserProps, UserState> {
   }
 
   displayProducts = () => {
-    fetch("http://localhost:3001/products", {
+    fetch(`${APIURL}/products`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",

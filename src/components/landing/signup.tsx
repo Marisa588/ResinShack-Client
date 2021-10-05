@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Redirect } from "react-router-dom";
+import APIURL from "../../helpers/environment";
 
 type SignUpProps = {
   token: string;
@@ -29,7 +30,7 @@ class SignUp extends Component<SignUpProps, SignUpState> {
 
   handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    let response = await fetch("http://localhost:3001/user/register", {
+    let response = await fetch(`${APIURL}/user/register`, {
       method: "POST",
       body: JSON.stringify({
         user: {

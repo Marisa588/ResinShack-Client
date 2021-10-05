@@ -1,5 +1,6 @@
 import { Component } from "react";
-import { Card, CardGroup, Button, Row, Col } from "react-bootstrap";
+import { Card, CardGroup, Button } from "react-bootstrap";
+import APIURL from "../../helpers/environment";
 
 type FavoriteProps = {
   favorite: {
@@ -14,7 +15,7 @@ type FavoriteProps = {
 
 class FavoriteProduct extends Component<FavoriteProps> {
   handleSubmit = () => {
-    fetch("http://localhost:3001/favorite", {
+    fetch(`${APIURL}/favorite`, {
       method: "POST",
       body: JSON.stringify({
         favorite: {

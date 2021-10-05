@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { Card, CardGroup, Button } from "react-bootstrap";
 import "bootswatch/dist/quartz/bootstrap.min.css";
+import APIURL from "../../helpers/environment";
 
 type PostProps = {
   token: string;
@@ -34,7 +35,7 @@ class AdminProducts extends Component<PostProps, PostState> {
     this.displayProducts();
   }
   displayProducts = () => {
-    fetch("http://localhost:3001/products", {
+    fetch(`${APIURL}/products`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -53,7 +54,7 @@ class AdminProducts extends Component<PostProps, PostState> {
   };
   handleDelete(id: number) {
     console.log(localStorage.getItem("token"));
-    fetch(`http://localhost:3001/products/${id}`, {
+    fetch(`${APIURL}/products/${id}`, {
       method: "Delete",
       headers: new Headers({
         "Content-Type": "application/json",

@@ -3,6 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import "bootswatch/dist/quartz/bootstrap.min.css";
 import "./upload.css";
 import AdminSitebar from "./admin-header";
+import APIURL from "../../helpers/environment";
 
 
 type UploadProps = {
@@ -52,7 +53,7 @@ class Upload extends Component<UploadProps, UploadState> {
   //  }
 
   handleSubmit = () => {
-    fetch("http://localhost:3001/products/", {
+    fetch(`${APIURL}/products/`, {
       method: "POST",
       body: JSON.stringify({
         product: {
