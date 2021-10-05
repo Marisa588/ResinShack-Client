@@ -28,27 +28,60 @@ class SignUp extends Component<SignUpProps, SignUpState> {
     };
   }
 
-  handleSubmit = async (event: React.FormEvent) => {
+  // handleSubmit = async (event: React.FormEvent) => {
+  //   event.preventDefault();
+  //   let response = await fetch(`${APIURL}/user/register`, {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       user: {
+  //         username: this.state.username,
+  //         password: this.state.password,
+  //         role: "",
+  //       },
+  //     }),
+  //     headers: new Headers({
+  //       "Content-Type": "application/json",
+  //     }),
+  //   });
+  //   let json = await response.json();
+  //   this.props.updateToken(json.sessionToken);
+  //   return <Redirect to="/home/" />;
+  // };
+
+  handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    let response = await fetch(`${APIURL}/user/register`, {
-      method: "POST",
-      body: JSON.stringify({
-        user: {
-          username: this.state.username,
-          password: this.state.password,
-          role: "",
-        },
-      }),
-      headers: new Headers({
-        "Content-Type": "application/json",
-      }),
-    });
-    let json = await response.json();
-    this.props.updateToken(json.sessionToken);
-    return <Redirect to="/home/" />;
-  };
+    fetch(`${APIURL}/user/register`, {
+        method:'POST',
+        body: JSON.stringify({
+            user: {
+                username: this.state.username,
+                password: this.state.password,
+                role: true
+            }
+        }),
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })            
+    }).then(
+        (response) => response.json()
+    ).then((data) => {
+        this.props.updateToken(data.sessionToken)
+        this.setState({redirectToHomepage: true, role: data.user.role})
+    })
+    .catch(err => {
+        console.log(err)
+    })
+    // console.log(this.props.updateRole(role))
+}
 
   render() {
+    let redirectHome = this.state.redirectToHomepage
+    if (redirectHome) {
+        if (this.state.role)
+            return (<Redirect to="/home/admin" />)
+        else
+            return (<Redirect to="/home/user" />)
+    }
     return (
       <div>
         <Form onSubmit={this.handleSubmit}>
