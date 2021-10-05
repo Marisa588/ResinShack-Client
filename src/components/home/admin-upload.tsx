@@ -72,7 +72,7 @@ class Upload extends Component<UploadProps, UploadState> {
     })
       .then((res) => res.json())
       .then((data) => {
-        this.props.updateToken(data.sessionToken);
+        // this.props.updateToken(data.sessionToken);
       })
       .catch((err) => {
         console.log(err);
