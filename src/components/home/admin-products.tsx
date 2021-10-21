@@ -2,6 +2,7 @@ import { Component } from "react";
 import { Card, CardGroup, Button } from "react-bootstrap";
 import "bootswatch/dist/quartz/bootstrap.min.css";
 import APIURL from "../../helpers/environment";
+import { Grid } from "@mui/material"
 
 type PostProps = {
   token: string;
@@ -90,35 +91,36 @@ class AdminProducts extends Component<PostProps, PostState> {
   //                 console.error(err)
   //                 })
   //             }
-  render() {
-    return (
-      <div className="list">
-        {this.state.products.map((products) => {
-          return (
-            <div className="productsPage">
-              <div className="admin-cards">
-                <CardGroup>
-                  <Card style={{ maxWidth: "22rem" }}>
-                    <Card.Img variant="top" src={products.imageUrl} />
-                    <Card.Body>
+
+  productsMapper = (): JSX.Element[] => {
+    return this.state.products.map((products: ProductsList, index: number) => {
+        return(
+            <Grid item xs={12} sm={6} md={3} key={index}>
+               <CardGroup style={{ width: "20rem", height: "600px"}}>
+                  <Card className="card">
+                    <Card.Img className= "image" variant="top" src={products.imageUrl} />
+                    <Card.Body className="card-body">
                       <Card.Title>{products.name}</Card.Title>
                       <Card.Text>{products.description}</Card.Text>
+                      <small className="text-muted">{products.price}</small>
                     </Card.Body>
-                    <small className="text-muted">{products.price}</small>
                     <Card.Footer>
-                      <Button onClick={() => this.handleDelete(products.id)}>
+                    <Button onClick={() => this.handleDelete(products.id)}>
                         Delete
                       </Button>
-                      <Button>Update</Button>
                     </Card.Footer>
                   </Card>
                 </CardGroup>
-              </div>
-            </div>
+            </Grid>
+        )
+    })
+  }
+  render() {
+          return (
+            <Grid container spacing={4} direction='row' justifyContent='center' alignItems='center' className='productsContainer'>
+                {this.productsMapper()}
+              </Grid>
           );
-        })}
-      </div>
-    );
   }
 }
 

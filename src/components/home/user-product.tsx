@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { Card, CardGroup, Button } from "react-bootstrap";
 import APIURL from "../../helpers/environment";
+import { Grid } from "@mui/material"
 
 type FavoriteProps = {
   favorite: {
@@ -40,6 +41,7 @@ class FavoriteProduct extends Component<FavoriteProps> {
         console.log(err);
       });
   };
+  
 
   render() {
     return (

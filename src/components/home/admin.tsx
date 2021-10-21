@@ -24,6 +24,7 @@ class Admin extends Component<AdminProps, AdminState> {
     return (
       <div>
         <AdminSitebar token={this.state.sessionToken} />
+        <br/>
         <AdminProducts token={this.state.sessionToken} />
       </div>
     );
