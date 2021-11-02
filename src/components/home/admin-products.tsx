@@ -65,11 +65,10 @@ class AdminProducts extends Component<PostProps, PostState> {
       .then(() => this.displayProducts())
       .catch((error) => console.log(error));
   }
-  // editProducts= (postId: number) => {
-  //  this.setState({editModal: true})
-  // }
-  // handleUpdate = (e: React.FormEvent) => {
-  //     e.preventDefault()
+  editProducts= (postId: number) => {
+   this.setState({editModal: true})
+  }
+  // handleUpdate = (id:number) => {
   //     let newItem = this.state.products
   //                 fetch(`http://localhost:3001/products/update/${id}`, {
   //                 method: "PUT",
@@ -107,7 +106,10 @@ class AdminProducts extends Component<PostProps, PostState> {
                     <Card.Footer>
                     <Button onClick={() => this.handleDelete(products.id)}>
                         Delete
-                      </Button>
+                    </Button>
+                    {/* <Button onClick={() => this.handleUpdate(products.id)}>
+                        Update
+                    </Button> */}
                     </Card.Footer>
                   </Card>
                 </CardGroup>
